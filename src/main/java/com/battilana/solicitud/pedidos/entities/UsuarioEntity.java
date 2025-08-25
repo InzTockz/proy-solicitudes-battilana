@@ -30,12 +30,17 @@ public class UsuarioEntity {
     private String email;
 
     @Column(name = "createAt")
-
     @CreationTimestamp
     private LocalDate createAt;
 
     @Column(name = "status")
     private Boolean status = true;
+
+    @Column(name = "username")
+    private String username;
+
+    @Column(name = "password")
+    private String password;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "roles")

@@ -6,6 +6,7 @@ import com.battilana.solicitud.pedidos.entities.UsuarioEntity;
 import com.battilana.solicitud.pedidos.mapper.UsuariosMapper;
 import com.battilana.solicitud.pedidos.repositorys.UsuarioRepository;
 import com.battilana.solicitud.pedidos.services.UsuarioService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,10 +16,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final UsuariosMapper usuariosMapper;
+    private final BCryptPasswordEncoder encoder;
 
-    public UsuarioServiceImpl(UsuarioRepository usuarioRepository, UsuariosMapper usuariosMapper) {
+    public UsuarioServiceImpl(UsuarioRepository usuarioRepository, UsuariosMapper usuariosMapper, BCryptPasswordEncoder encoder) {
         this.usuarioRepository = usuarioRepository;
         this.usuariosMapper = usuariosMapper;
+        this.encoder = encoder;
     }
 
     @Override
@@ -28,7 +31,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public UsuarioResponse addUser(UsuarioRequest usuarioRequest) {
-        return this.usuariosMapper.toUserResponse(this.usuarioRepository.save(this.usuariosMapper.toUserEntity(usuarioRequest)));
+        UsuarioEntity usuarioEntity = this.usuariosMapper.toUserEntity(usuarioRequest);
+        usuarioEntity.setPassword(encoder.encode(usuarioRequest.password()));
+        return this.usuariosMapper.toUserResponse(this.usuarioRepository.save(usuarioEntity));
     }
 
     @Override

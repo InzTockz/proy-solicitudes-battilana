@@ -5,6 +5,7 @@ import com.battilana.solicitud.pedidos.dtos.UsuarioResponse;
 import com.battilana.solicitud.pedidos.services.UsuarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
+    private final AuthenticationManager authenticationManager;
 
     public UsuarioController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
@@ -44,4 +46,7 @@ public class UsuarioController {
         this.usuarioService.disableUser(idUsuario);
         return ResponseEntity.noContent().build();
     }
+
+    //SECCION DE LOGIN
+
 }
