@@ -12,7 +12,7 @@ public class Constants {
     public static final String SUPER_SECRET_KEY = "d3DGkSdnJ7DdZvluO6QUgkZhJ8IFPnEs89F0qCNODOG7d2BQ2FpR40PouFCqUN3KoblbbUuHvZ2";
     public static final long TOKEN_EXPIRATION_TIME = 3600000;
 
-    public static SecretKey claveSecreta(String secretKey){
+    public static SecretKey getSignedKey(String secretKey){
         byte[] keyBites = secretKey.getBytes(StandardCharsets.UTF_8);
         return Keys.hmacShaKeyFor(keyBites);
     }

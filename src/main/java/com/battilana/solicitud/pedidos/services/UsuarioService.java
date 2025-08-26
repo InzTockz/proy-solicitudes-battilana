@@ -1,5 +1,7 @@
 package com.battilana.solicitud.pedidos.services;
 
+import com.battilana.solicitud.pedidos.dtos.LoginRequest;
+import com.battilana.solicitud.pedidos.dtos.LoginResponse;
 import com.battilana.solicitud.pedidos.dtos.UsuarioRequest;
 import com.battilana.solicitud.pedidos.dtos.UsuarioResponse;
 
@@ -12,4 +14,7 @@ public interface UsuarioService {
     UsuarioResponse updateUser (Long idUsuario, UsuarioRequest usuarioRequest);
     UsuarioResponse findUsuario (Long idUsuario);
     void disableUser (Long idUsuario);
+
+    //LOGIN
+    LoginResponse login (LoginRequest loginRequest);
 }

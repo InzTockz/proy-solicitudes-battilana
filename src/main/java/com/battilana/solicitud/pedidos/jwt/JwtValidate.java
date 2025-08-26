@@ -3,7 +3,6 @@ package com.battilana.solicitud.pedidos.jwt;
 import com.battilana.solicitud.pedidos.security.CustomDetailService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,11 +22,11 @@ public class JwtValidate {
         }
     }
 
-    public static Claims validacionJwt(HttpServletRequest request){
+    public static Claims JwtValid(HttpServletRequest request){
         String jwtToken = request.getHeader(HEADER_AUTHORIZATION).replace(TOKEN_BEARER_PREFIX, "");
 
         Claims claims = Jwts.parser()
-                .verifyWith(claveSecreta(SUPER_SECRET_KEY))
+                .verifyWith(getSignedKey(SUPER_SECRET_KEY))
                 .build()
                 .parseSignedClaims(jwtToken)
                 .getPayload();
@@ -35,10 +34,8 @@ public class JwtValidate {
         return claims;
     }
 
-    public static void colocarAutenticacion(Claims claims, CustomDetailService customDetailService){
+    public static void setAuthentication(Claims claims, CustomDetailService customDetailService){
         UserDetails userDetails = customDetailService.loadUserByUsername(claims.getSubject());
-
-        System.out.println("Que esto: " + claims.getSubject());
 
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
                 userDetails, null, userDetails.getAuthorities()

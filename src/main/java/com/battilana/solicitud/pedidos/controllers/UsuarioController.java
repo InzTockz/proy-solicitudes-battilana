@@ -1,7 +1,10 @@
 package com.battilana.solicitud.pedidos.controllers;
 
+import com.battilana.solicitud.pedidos.dtos.LoginRequest;
+import com.battilana.solicitud.pedidos.dtos.LoginResponse;
 import com.battilana.solicitud.pedidos.dtos.UsuarioRequest;
 import com.battilana.solicitud.pedidos.dtos.UsuarioResponse;
+import com.battilana.solicitud.pedidos.jwt.JwtGenerator;
 import com.battilana.solicitud.pedidos.services.UsuarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +18,6 @@ import java.util.List;
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
-    private final AuthenticationManager authenticationManager;
 
     public UsuarioController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
@@ -47,6 +49,9 @@ public class UsuarioController {
         return ResponseEntity.noContent().build();
     }
 
-    //SECCION DE LOGIN
-
+    //SECCION DE LOGIN\
+    @PostMapping("/userLogin")
+    ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest){
+        return ResponseEntity.status(HttpStatus.OK).body(this.usuarioService.login(loginRequest));
+    }
 }
