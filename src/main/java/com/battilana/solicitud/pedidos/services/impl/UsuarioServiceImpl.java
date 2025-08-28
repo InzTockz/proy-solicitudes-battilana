@@ -96,20 +96,20 @@ public class UsuarioServiceImpl implements UsuarioService {
                         usuarioEntity.get().getNames(),
                         usuarioEntity.get().getSubnames(),
                         token,
-                        "Validacion exitosa!");
+                        "success");
             } else {
                 return new LoginResponse(null,
                         "",
                         "",
                         "",
-                        "Credenciales incorrectas");
+                        "error");
             }
         } else {
             return new LoginResponse(null,
                     "",
                     "",
                     "",
-                    "Credenciales incorrectas");
+                    "error");
         }
     }
 }
