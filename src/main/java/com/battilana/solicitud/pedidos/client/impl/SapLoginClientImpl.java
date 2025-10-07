@@ -6,11 +6,13 @@ import com.battilana.solicitud.pedidos.client.dto.SapLoginResponse;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SapLoginClientImplk {
+public class SapLoginClientImpl {
 
-    private SapLoginClient sapLoginClient;
+    private final SapLoginClient sapLoginClient;
 
-    public SapLoginResponse getSapLoginClient(SapLoginRequest sapLoginRequest){
-        return this.sapLoginClient.sapLogin(sapLoginRequest);
+    public SapLoginClientImpl(SapLoginClient sapLoginClient) {
+        this.sapLoginClient = sapLoginClient;
     }
+
+
 }
