@@ -46,6 +46,7 @@ public class SecurityConfig {
                             .requestMatchers("/api/v1/usuario/list").permitAll()
                             .requestMatchers("/api/v1/usuario/register").hasAnyRole("ADMINISTRADOR")
                             .requestMatchers("/api/v1/usuario/userLogin").permitAll()
+                            .requestMatchers("/api/v1/sap/**").permitAll()
                             .anyRequest().authenticated();
                 }
         ).addFilterAfter(jwtFilter, UsernamePasswordAuthenticationFilter.class);

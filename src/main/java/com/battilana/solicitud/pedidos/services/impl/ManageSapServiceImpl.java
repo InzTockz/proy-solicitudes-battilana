@@ -1,0 +1,83 @@
+package com.battilana.solicitud.pedidos.services.impl;
+
+import com.battilana.solicitud.pedidos.config.FeignConfig;
+import com.battilana.solicitud.pedidos.dtos.*;
+import com.battilana.solicitud.pedidos.entities.UsuariosSapEntity;
+import com.battilana.solicitud.pedidos.repositorys.UsuarioSapRepository;
+import com.battilana.solicitud.pedidos.services.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class ManageSapServiceImpl implements ManageSapService {
+
+    private final DraftsClient draftsClient;
+    private final SapLoginClient sapLoginClient;
+    private final UsuarioSapRepository usuarioSapRepository;
+    private final ClientesClient clientesClient;
+    private final VendedorClient vendedorClient;
+
+    public ManageSapServiceImpl(DraftsClient draftsClient, SapLoginClient sapLoginClient, UsuarioSapRepository usuarioSapRepository, ClientesClient clientesClient, VendedorClient vendedorClient) {
+        this.draftsClient = draftsClient;
+        this.sapLoginClient = sapLoginClient;
+        this.usuarioSapRepository = usuarioSapRepository;
+        this.clientesClient = clientesClient;
+        this.vendedorClient = vendedorClient;
+    }
+
+    @Override
+    public DraftResponse findDraftById(Integer idDraft, Long idUsuarioSap) {
+
+        Optional<UsuariosSapEntity> usuariosSapEntity = this.usuarioSapRepository.findById(idUsuarioSap);
+        if (usuariosSapEntity.isPresent()) {
+
+            ResponseEntity<SapLoginResponse> sapLoginResponse = this.sapLoginClient.sapLogin(
+                    new SapLoginRequest(
+                            usuariosSapEntity.get().getCompanyName(),
+                            usuariosSapEntity.get().getPassword(),
+                            usuariosSapEntity.get().getUsername()
+                    )
+            );
+
+            List<String> cookie = sapLoginResponse.getHeaders().get("Set-Cookie");
+            FeignConfig.setSession(cookie.get(0) + cookie.get(1));
+
+            return this.draftsClient.listDraftById(idDraft);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public DraftResponse saveDraft(DraftRequest draftRequest, Long idUsuarioSap) {
+        Optional<UsuariosSapEntity> usuariosSapEntity = this.usuarioSapRepository.findById(idUsuarioSap);
+        if (usuariosSapEntity.isPresent()) {
+            ResponseEntity<SapLoginResponse> sapLoginResponse = this.sapLoginClient.sapLogin(new SapLoginRequest(
+                    usuariosSapEntity.get().getCompanyName(),
+                    usuariosSapEntity.get().getPassword(),
+                    usuariosSapEntity.get().getUsername()
+            ));
+
+            List<String> cookie = sapLoginResponse.getHeaders().get("Set-Cookie");
+            FeignConfig.setSession(cookie.get(0) + cookie.get(1));
+
+            return this.draftsClient.addDraft(draftRequest);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public List<ClientesResponse> listadoClientesPorVendedor(Integer idVendedor) {
+        return this.clientesClient.listadoClientesPorIdVendedor(idVendedor);
+    }
+
+    @Override
+    public VendedoresResponse buscarVendedorPorId(Integer idVendedor) {
+        return this.vendedorClient.buscarVendedorPorId(idVendedor);
+    }
+
+}

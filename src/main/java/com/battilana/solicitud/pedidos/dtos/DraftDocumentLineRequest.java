@@ -1,4 +1,4 @@
-package com.battilana.solicitud.pedidos.client.dto;
+package com.battilana.solicitud.pedidos.dtos;
 
 public record DraftDocumentLineRequest (
         String ItemCode,
