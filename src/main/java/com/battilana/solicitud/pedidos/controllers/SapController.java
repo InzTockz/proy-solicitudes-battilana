@@ -40,4 +40,15 @@ public class SapController {
     public ResponseEntity<VendedoresResponse> buscarVendedorPorId(@PathVariable Integer idVendedor){
         return ResponseEntity.status(HttpStatus.OK).body(this.manageSapService.buscarVendedorPorId(idVendedor));
     }
+
+    @GetMapping("/listado/articulos/{idAlmacen}")
+    public ResponseEntity<List<ArticulosResponse>> listadoArticulosPorAlmacen(@PathVariable String idAlmacen){
+        return ResponseEntity.status(HttpStatus.OK).body(this.manageSapService.listadoArticulosPorAlmacen(idAlmacen));
+    }
+
+    @GetMapping("/stock/articulo/{idArticulo}/almacen/{idAlmacen}")
+    public ResponseEntity<StockAlmacenResponse> stockPorProductoYAlmacen(@PathVariable String idArticulo, @PathVariable String idAlmacen){
+        return ResponseEntity.status(HttpStatus.OK).body(this.manageSapService.stockPorArticuloYAlmacen(idArticulo, idAlmacen));
+    }
+
 }

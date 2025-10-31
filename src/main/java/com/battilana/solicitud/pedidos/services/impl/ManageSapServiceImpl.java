@@ -19,13 +19,15 @@ public class ManageSapServiceImpl implements ManageSapService {
     private final UsuarioSapRepository usuarioSapRepository;
     private final ClientesClient clientesClient;
     private final VendedorClient vendedorClient;
+    private final ArticuloClient articuloClient;
 
-    public ManageSapServiceImpl(DraftsClient draftsClient, SapLoginClient sapLoginClient, UsuarioSapRepository usuarioSapRepository, ClientesClient clientesClient, VendedorClient vendedorClient) {
+    public ManageSapServiceImpl(DraftsClient draftsClient, SapLoginClient sapLoginClient, UsuarioSapRepository usuarioSapRepository, ClientesClient clientesClient, VendedorClient vendedorClient, ArticuloClient articuloClient) {
         this.draftsClient = draftsClient;
         this.sapLoginClient = sapLoginClient;
         this.usuarioSapRepository = usuarioSapRepository;
         this.clientesClient = clientesClient;
         this.vendedorClient = vendedorClient;
+        this.articuloClient = articuloClient;
     }
 
     @Override
@@ -78,6 +80,16 @@ public class ManageSapServiceImpl implements ManageSapService {
     @Override
     public VendedoresResponse buscarVendedorPorId(Integer idVendedor) {
         return this.vendedorClient.buscarVendedorPorId(idVendedor);
+    }
+
+    @Override
+    public List<ArticulosResponse> listadoArticulosPorAlmacen(String idAlmacen) {
+        return this.articuloClient.listadoArticulosPorAlmacen(idAlmacen);
+    }
+
+    @Override
+    public StockAlmacenResponse stockPorArticuloYAlmacen(String idArticulo, String idAlmacen) {
+        return this.articuloClient.stockPorArticuloYAlmacen(idArticulo,idAlmacen);
     }
 
 }

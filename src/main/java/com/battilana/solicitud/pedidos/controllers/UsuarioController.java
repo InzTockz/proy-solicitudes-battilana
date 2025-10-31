@@ -51,7 +51,7 @@ public class UsuarioController {
     }
 
     //SECCION DE LOGIN\
-    @PostMapping("/userLogin")
+    @PostMapping("/login")
     ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest){
         return ResponseEntity.status(HttpStatus.OK).body(this.usuarioService.login(loginRequest));
     }
