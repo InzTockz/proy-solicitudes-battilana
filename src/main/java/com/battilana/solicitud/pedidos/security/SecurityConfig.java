@@ -44,6 +44,7 @@ public class SecurityConfig {
                     authorize
                             //.requestMatchers("/api/v1/usuario/list").hasAnyRole("USUARIO")
                             .requestMatchers("/api/v1/usuario/list").permitAll()
+                            .requestMatchers("/api/v1/usuario-sap/listar").permitAll()
                             .requestMatchers("/api/v1/usuario/register").hasAnyRole("ADMINISTRADOR")
                             .requestMatchers("/api/v1/usuario/login").permitAll()
                             .requestMatchers("/api/v1/sap/**").permitAll()

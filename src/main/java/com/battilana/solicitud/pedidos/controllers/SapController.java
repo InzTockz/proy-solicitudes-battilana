@@ -31,6 +31,7 @@ public class SapController {
         return ResponseEntity.status(HttpStatus.OK).body(this.manageSapService.findDraftById(idDraft, idUserSap));
     }
 
+    //LISTADO DE CLIENTES POR VENDEDOR
     @GetMapping("/listado/clientes/{idVendedor}")
     public ResponseEntity<List<ClientesResponse>> listarClientesPorVendedor(@PathVariable Integer idVendedor){
         return ResponseEntity.status(HttpStatus.OK).body(this.manageSapService.listadoClientesPorVendedor(idVendedor));

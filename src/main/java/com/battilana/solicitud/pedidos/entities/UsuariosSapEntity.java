@@ -17,6 +17,9 @@ public class UsuariosSapEntity {
     @Column(name = "id_usuario_sap")
     private Long idUsuarioSap;
 
+    @Column(name = "nombre_usuario")
+    private String nombreUsuario;
+
     @Column(name = "company_name")
     private String companyName;
 
