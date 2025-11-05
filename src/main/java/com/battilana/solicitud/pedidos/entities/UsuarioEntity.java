@@ -33,6 +33,12 @@ public class UsuarioEntity {
     @CreationTimestamp
     private LocalDate createAt;
 
+    @Column(name = "codigo")
+    private Integer codigo;
+
+    @Column(name = "almacen")
+    private String almacen;
+
     @Column(name = "status")
     private Boolean status = true;
 

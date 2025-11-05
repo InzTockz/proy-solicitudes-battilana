@@ -95,11 +95,15 @@ public class UsuarioServiceImpl implements UsuarioService {
                 return new LoginResponse(usuarioEntity.get().getIdUsuario(),
                         usuarioEntity.get().getNames(),
                         usuarioEntity.get().getSubnames(),
+                        usuarioEntity.get().getCodigo(),
+                        usuarioEntity.get().getAlmacen(),
                         token,
                         "success");
             } else {
                 return new LoginResponse(null,
                         "",
+                        "",
+                        0,
                         "",
                         "",
                         "error");
@@ -107,6 +111,8 @@ public class UsuarioServiceImpl implements UsuarioService {
         } else {
             return new LoginResponse(null,
                     "",
+                    "",
+                    0,
                     "",
                     "",
                     "error");
