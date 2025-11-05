@@ -42,11 +42,13 @@ public class SapController {
         return ResponseEntity.status(HttpStatus.OK).body(this.manageSapService.buscarVendedorPorId(idVendedor));
     }
 
+    //LISTAR ARTICULOS POR ALMACEN
     @GetMapping("/listado/articulos/{idAlmacen}")
     public ResponseEntity<List<ArticulosResponse>> listadoArticulosPorAlmacen(@PathVariable String idAlmacen){
         return ResponseEntity.status(HttpStatus.OK).body(this.manageSapService.listadoArticulosPorAlmacen(idAlmacen));
     }
 
+    //LISTAR STOCK POR PRODUCTO Y ALMACEN
     @GetMapping("/stock/articulo/{idArticulo}/almacen/{idAlmacen}")
     public ResponseEntity<StockAlmacenResponse> stockPorProductoYAlmacen(@PathVariable String idArticulo, @PathVariable String idAlmacen){
         return ResponseEntity.status(HttpStatus.OK).body(this.manageSapService.stockPorArticuloYAlmacen(idArticulo, idAlmacen));
