@@ -9,7 +9,6 @@ public record DraftResponse(
         String CardCode,
         String CardName,
         String DocDate,
-        String DocDueDate,
         String DocCurrency,
         String SalesPersonCode,
         String DocTotal,

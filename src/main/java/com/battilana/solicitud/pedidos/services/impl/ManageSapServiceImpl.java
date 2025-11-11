@@ -35,7 +35,6 @@ public class ManageSapServiceImpl implements ManageSapService {
 
         Optional<UsuariosSapEntity> usuariosSapEntity = this.usuarioSapRepository.findById(idUsuarioSap);
         if (usuariosSapEntity.isPresent()) {
-
             ResponseEntity<SapLoginResponse> sapLoginResponse = this.sapLoginClient.sapLogin(
                     new SapLoginRequest(
                             usuariosSapEntity.get().getCompanyName(),
