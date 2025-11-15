@@ -2,6 +2,7 @@ package com.battilana.solicitud.pedidos.controllers;
 
 import com.battilana.solicitud.pedidos.dtos.*;
 import com.battilana.solicitud.pedidos.services.DraftsClient;
+import com.battilana.solicitud.pedidos.services.DraftsSapClient;
 import com.battilana.solicitud.pedidos.services.ManageSapService;
 import com.battilana.solicitud.pedidos.services.SapLoginClient;
 import org.springframework.http.HttpStatus;
@@ -16,9 +17,11 @@ import java.util.List;
 public class SapController {
 
     private final ManageSapService manageSapService;
+    private final DraftsSapClient draftsSapClient;
 
-    public SapController(ManageSapService manageSapService) {
+    public SapController(ManageSapService manageSapService, DraftsSapClient draftsSapClient) {
         this.manageSapService = manageSapService;
+        this.draftsSapClient = draftsSapClient;
     }
 
     @PostMapping("/agregar/user-sap/{idUsuarioSap}")
@@ -53,5 +56,7 @@ public class SapController {
     public ResponseEntity<StockAlmacenResponse> stockPorProductoYAlmacen(@PathVariable String idArticulo, @PathVariable String idAlmacen){
         return ResponseEntity.status(HttpStatus.OK).body(this.manageSapService.stockPorArticuloYAlmacen(idArticulo, idAlmacen));
     }
+
+    //LISTADO DE DRAFTS POR VENDEDOR
 
 }

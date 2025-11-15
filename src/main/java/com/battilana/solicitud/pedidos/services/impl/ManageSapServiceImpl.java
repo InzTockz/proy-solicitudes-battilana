@@ -20,14 +20,16 @@ public class ManageSapServiceImpl implements ManageSapService {
     private final ClientesClient clientesClient;
     private final VendedorClient vendedorClient;
     private final ArticuloClient articuloClient;
+    private final DraftsSapClient draftsSapClient;
 
-    public ManageSapServiceImpl(DraftsClient draftsClient, SapLoginClient sapLoginClient, UsuarioSapRepository usuarioSapRepository, ClientesClient clientesClient, VendedorClient vendedorClient, ArticuloClient articuloClient) {
+    public ManageSapServiceImpl(DraftsClient draftsClient, SapLoginClient sapLoginClient, UsuarioSapRepository usuarioSapRepository, ClientesClient clientesClient, VendedorClient vendedorClient, ArticuloClient articuloClient, DraftsSapClient draftsSapClient) {
         this.draftsClient = draftsClient;
         this.sapLoginClient = sapLoginClient;
         this.usuarioSapRepository = usuarioSapRepository;
         this.clientesClient = clientesClient;
         this.vendedorClient = vendedorClient;
         this.articuloClient = articuloClient;
+        this.draftsSapClient = draftsSapClient;
     }
 
     @Override
