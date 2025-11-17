@@ -13,6 +13,7 @@ public record DraftSapResponse(
         String docStatus,
         String canceled,
         String slpCode,
-        LocalDate createDate
+        LocalDate createDate,
+        String wddStatus
 ) {
 }

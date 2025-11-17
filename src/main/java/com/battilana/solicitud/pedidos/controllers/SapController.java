@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -58,5 +59,8 @@ public class SapController {
     }
 
     //LISTADO DE DRAFTS POR VENDEDOR
-
+    @GetMapping("/listar-draft/{idVendedor}")
+    public ResponseEntity<List<DraftSapResponse>> listadoDraftsPorVendedorYFecha(@PathVariable Integer idVendedor, @RequestParam("fechaInicio") LocalDate fechaInicio, @RequestParam("fechaFin") LocalDate fechaFin){
+        return ResponseEntity.status(HttpStatus.OK).body(this.draftsSapClient.listadoDraftPorVendedorYFechas(idVendedor, fechaInicio, fechaFin));
+    }
 }
