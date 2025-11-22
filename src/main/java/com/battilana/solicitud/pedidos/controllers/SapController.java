@@ -51,6 +51,10 @@ public class SapController {
     public ResponseEntity<List<ArticulosResponse>> listadoArticulosPorAlmacen(@PathVariable String idAlmacen){
         return ResponseEntity.status(HttpStatus.OK).body(this.manageSapService.listadoArticulosPorAlmacen(idAlmacen));
     }
+    @GetMapping("/listar-articulos/{idAlmacen}")
+    public ResponseEntity<List<ArticulosResponse>> listadoArticulosPorAlmacenYNombre(@PathVariable String idAlmacen, @RequestParam("nombre") String nombre){
+        return ResponseEntity.status(HttpStatus.OK).body(this.manageSapService.listadoArticulosPorAlmacenYNombre(idAlmacen, nombre));
+    }
 
     //LISTAR STOCK POR PRODUCTO Y ALMACEN
     @GetMapping("/stock/articulo/{idArticulo}/almacen/{idAlmacen}")

@@ -12,5 +12,6 @@ public interface ManageSapService {
     List<ClientesResponse> listadoClientesPorVendedor(Integer idVendedor);
     VendedoresResponse buscarVendedorPorId(Integer idVendedor);
     List<ArticulosResponse> listadoArticulosPorAlmacen(String idAlmacen);
+    List<ArticulosResponse> listadoArticulosPorAlmacenYNombre(String idAlmacen, String nombre);
     StockAlmacenResponse stockPorArticuloYAlmacen(String idArticulo, String idAlmacen);
 }

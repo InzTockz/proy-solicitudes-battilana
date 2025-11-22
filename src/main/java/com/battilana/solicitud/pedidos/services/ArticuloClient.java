@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface ArticuloClient {
     @RequestMapping(method = RequestMethod.GET, value = "/stock/articulo/{idArticulo}/almacen/{idAlmacen}")
     StockAlmacenResponse stockPorArticuloYAlmacen(@PathVariable String idArticulo, @PathVariable String idAlmacen);
 
+    @RequestMapping(method = RequestMethod.GET, value = "/listar-articulos/{idAlmacen}")
+    List<ArticulosResponse> listadoArticulosPorAlmacenYNombre(@PathVariable String idAlmacen, @RequestParam("nombre") String nombre);
 }

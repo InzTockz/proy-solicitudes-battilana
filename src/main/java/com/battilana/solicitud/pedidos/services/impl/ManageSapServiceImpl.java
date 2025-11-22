@@ -89,6 +89,11 @@ public class ManageSapServiceImpl implements ManageSapService {
     }
 
     @Override
+    public List<ArticulosResponse> listadoArticulosPorAlmacenYNombre(String idAlmacen, String nombre) {
+        return this.articuloClient.listadoArticulosPorAlmacenYNombre(idAlmacen, nombre);
+    }
+
+    @Override
     public StockAlmacenResponse stockPorArticuloYAlmacen(String idArticulo, String idAlmacen) {
         return this.articuloClient.stockPorArticuloYAlmacen(idArticulo,idAlmacen);
     }
