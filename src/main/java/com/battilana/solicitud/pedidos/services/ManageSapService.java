@@ -10,6 +10,7 @@ public interface ManageSapService {
     DraftResponse findDraftById(Integer idDraft, Long idUsuarioSap);
     DraftResponse saveDraft(DraftRequest draftRequest, Long idUsuarioSap);
     List<ClientesResponse> listadoClientesPorVendedor(Integer idVendedor);
+    List<ClientesResponse> listadoClientesPorVendedorYCardName(Integer idVendedor, String cardName);
     VendedoresResponse buscarVendedorPorId(Integer idVendedor);
     List<ArticulosResponse> listadoArticulosPorAlmacen(String idAlmacen);
     List<ArticulosResponse> listadoArticulosPorAlmacenYNombre(String idAlmacen, String nombre);

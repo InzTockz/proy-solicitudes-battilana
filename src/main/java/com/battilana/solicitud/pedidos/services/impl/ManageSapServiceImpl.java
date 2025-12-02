@@ -79,6 +79,11 @@ public class ManageSapServiceImpl implements ManageSapService {
     }
 
     @Override
+    public List<ClientesResponse> listadoClientesPorVendedorYCardName(Integer idVendedor, String cardName) {
+        return this.clientesClient.listadoClientesPorVendedorYCardName(idVendedor, cardName);
+    }
+
+    @Override
     public VendedoresResponse buscarVendedorPorId(Integer idVendedor) {
         return this.vendedorClient.buscarVendedorPorId(idVendedor);
     }

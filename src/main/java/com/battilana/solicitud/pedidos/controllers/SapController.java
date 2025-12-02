@@ -5,12 +5,16 @@ import com.battilana.solicitud.pedidos.services.DraftsClient;
 import com.battilana.solicitud.pedidos.services.DraftsSapClient;
 import com.battilana.solicitud.pedidos.services.ManageSapService;
 import com.battilana.solicitud.pedidos.services.SapLoginClient;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import feign.FeignException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/sap")
@@ -20,14 +24,42 @@ public class SapController {
     private final ManageSapService manageSapService;
     private final DraftsSapClient draftsSapClient;
 
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
     public SapController(ManageSapService manageSapService, DraftsSapClient draftsSapClient) {
         this.manageSapService = manageSapService;
         this.draftsSapClient = draftsSapClient;
     }
 
     @PostMapping("/agregar/user-sap/{idUsuarioSap}")
-    public ResponseEntity<DraftResponse> agregarDraft(@RequestBody DraftRequest draftRequest,@PathVariable Long idUsuarioSap){
-        return ResponseEntity.status(HttpStatus.CREATED).body(this.manageSapService.saveDraft(draftRequest, idUsuarioSap));
+    public ResponseEntity<?> agregarDraft(@RequestBody DraftRequest draftRequest,@PathVariable Long idUsuarioSap){
+        try {
+            DraftResponse respuesta = this.manageSapService.saveDraft(draftRequest, idUsuarioSap);
+
+            if(respuesta == null){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new ErrorResponse("message", "Usuario Sap no Encontrado"));
+            }
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(respuesta);
+        } catch (FeignException e){
+            String body = e.contentUTF8();
+            String sapCode = "UNKNOWN";
+            try {
+                JsonNode root = objectMapper.readTree(body);
+                sapCode = root.path("error").path("code").asText("UNKKOWN");
+            } catch (Exception ignore){}
+
+            String userMessage = "Ocurrió un error en SAP";
+
+            if(sapCode.equals("-10")){
+                userMessage = "Actualizar tipo de cambio";
+            }
+
+            ErrorResponse errorResponse = new ErrorResponse(sapCode, userMessage);
+
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
     }
 
     @GetMapping("/listado/idDraft/{idDraft}/idUserSap/{idUserSap}")
@@ -39,6 +71,11 @@ public class SapController {
     @GetMapping("/listado/clientes/{idVendedor}")
     public ResponseEntity<List<ClientesResponse>> listarClientesPorVendedor(@PathVariable Integer idVendedor){
         return ResponseEntity.status(HttpStatus.OK).body(this.manageSapService.listadoClientesPorVendedor(idVendedor));
+    }
+
+    @GetMapping("/listar-clientes/vendedor/{idVendedor}")
+    public ResponseEntity<List<ClientesResponse>> listarClientesPorVendedorYCardName(@PathVariable Integer idVendedor, @RequestParam("cardName") String cardName){
+        return ResponseEntity.status(HttpStatus.OK).body(this.manageSapService.listadoClientesPorVendedorYCardName(idVendedor, cardName));
     }
 
     @GetMapping("/listado/vendedor/{idVendedor}")
