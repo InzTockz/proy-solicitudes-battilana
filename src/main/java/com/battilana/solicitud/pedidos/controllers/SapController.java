@@ -1,10 +1,8 @@
 package com.battilana.solicitud.pedidos.controllers;
 
 import com.battilana.solicitud.pedidos.dtos.*;
-import com.battilana.solicitud.pedidos.services.DraftsClient;
 import com.battilana.solicitud.pedidos.services.DraftsSapClient;
 import com.battilana.solicitud.pedidos.services.ManageSapService;
-import com.battilana.solicitud.pedidos.services.SapLoginClient;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.FeignException;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/sap")
@@ -93,8 +90,8 @@ public class SapController {
         return ResponseEntity.status(HttpStatus.OK).body(this.manageSapService.listadoArticulosPorAlmacenYNombre(idAlmacen, nombre));
     }
 
-    //LISTAR STOCK POR PRODUCTO Y ALMACEN
-    @GetMapping("/stock/articulo/{idArticulo}/almacen/{idAlmacen}")
+    //LISTAR STOCK POR PRODUCTO Y ALMACENES
+    @GetMapping("/stock/articulo/{idArticulo}/vendedor/{idAlmacen}")
     public ResponseEntity<StockAlmacenResponse> stockPorProductoYAlmacen(@PathVariable String idArticulo, @PathVariable String idAlmacen){
         return ResponseEntity.status(HttpStatus.OK).body(this.manageSapService.stockPorArticuloYAlmacen(idArticulo, idAlmacen));
     }

@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "tbl_usuario")
@@ -16,9 +18,9 @@ import java.time.LocalDate;
 public class UsuarioEntity {
 
     @Id
-    @Column(name = "idUsuario")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idUsuario;
+    private Integer idUsuario;
 
     @Column(name = "names", length = 150)
     private String names;
@@ -29,18 +31,16 @@ public class UsuarioEntity {
     @Column(name = "email", length = 100)
     private String email;
 
-    @Column(name = "createAt")
+    @Column(name = "phone", length = 9)
+    private String phone;
+
+    @Column(name = "date_created")
     @CreationTimestamp
     private LocalDate createAt;
 
-    @Column(name = "codigo")
-    private Integer codigo;
-
-    @Column(name = "almacen")
-    private String almacen;
-
-    @Column(name = "status")
-    private Boolean status = true;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "roles")
+    private Roles roles = Roles.USUARIO;
 
     @Column(name = "username")
     private String username;
@@ -48,7 +48,16 @@ public class UsuarioEntity {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "cod_vendedor")
+    private Integer codVendedor;
+
+    @Column(name = "status")
+    private Boolean status = true;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<AlmacenesEntity> almacenes = new HashSet<>();
+
     @Enumerated(EnumType.STRING)
-    @Column(name = "roles")
-    private Roles roles = Roles.USUARIO;
+    @Column(name = "tipo_usuario")
+    private TipoUsuario tipoUsuario;
 }

@@ -5,7 +5,7 @@ public record StockAlmacenResponse (
         double comprometido,
         double stockTotal,
         String unidadMedida,
-        String codigoArticulo,
-        String codigoAlmacen
+        String codigoArticulo
+        //String codigoAlmacen
 ){
 }

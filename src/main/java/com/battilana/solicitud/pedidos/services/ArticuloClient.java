@@ -18,7 +18,7 @@ public interface ArticuloClient {
     List<ArticulosResponse> listadoArticulosPorAlmacen(@PathVariable String idAlmacen);
 
     @RequestMapping(method = RequestMethod.GET, value = "/stock/articulo/{idArticulo}/almacen/{idAlmacen}")
-    StockAlmacenResponse stockPorArticuloYAlmacen(@PathVariable String idArticulo, @PathVariable String idAlmacen);
+    StockAlmacenResponse stockPorArticuloYAlmacenes(@PathVariable String idArticulo, @PathVariable String idAlmacen);
 
     @RequestMapping(method = RequestMethod.GET, value = "/listar-articulos/{idAlmacen}")
     List<ArticulosResponse> listadoArticulosPorAlmacenYNombre(@PathVariable String idAlmacen, @RequestParam("nombre") String nombre);

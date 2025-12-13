@@ -2,12 +2,16 @@ package com.battilana.solicitud.pedidos.services.impl;
 
 import com.battilana.solicitud.pedidos.config.FeignConfig;
 import com.battilana.solicitud.pedidos.dtos.*;
+import com.battilana.solicitud.pedidos.entities.AlmacenesEntity;
+import com.battilana.solicitud.pedidos.entities.UsuarioEntity;
 import com.battilana.solicitud.pedidos.entities.UsuariosSapEntity;
+import com.battilana.solicitud.pedidos.repositorys.UsuarioRepository;
 import com.battilana.solicitud.pedidos.repositorys.UsuarioSapRepository;
 import com.battilana.solicitud.pedidos.services.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,8 +25,9 @@ public class ManageSapServiceImpl implements ManageSapService {
     private final VendedorClient vendedorClient;
     private final ArticuloClient articuloClient;
     private final DraftsSapClient draftsSapClient;
+    private final UsuarioRepository usuarioRepository;
 
-    public ManageSapServiceImpl(DraftsClient draftsClient, SapLoginClient sapLoginClient, UsuarioSapRepository usuarioSapRepository, ClientesClient clientesClient, VendedorClient vendedorClient, ArticuloClient articuloClient, DraftsSapClient draftsSapClient) {
+    public ManageSapServiceImpl(DraftsClient draftsClient, SapLoginClient sapLoginClient, UsuarioSapRepository usuarioSapRepository, ClientesClient clientesClient, VendedorClient vendedorClient, ArticuloClient articuloClient, DraftsSapClient draftsSapClient, UsuarioRepository usuarioRepository) {
         this.draftsClient = draftsClient;
         this.sapLoginClient = sapLoginClient;
         this.usuarioSapRepository = usuarioSapRepository;
@@ -30,6 +35,7 @@ public class ManageSapServiceImpl implements ManageSapService {
         this.vendedorClient = vendedorClient;
         this.articuloClient = articuloClient;
         this.draftsSapClient = draftsSapClient;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @Override
@@ -100,7 +106,7 @@ public class ManageSapServiceImpl implements ManageSapService {
 
     @Override
     public StockAlmacenResponse stockPorArticuloYAlmacen(String idArticulo, String idAlmacen) {
-        return this.articuloClient.stockPorArticuloYAlmacen(idArticulo,idAlmacen);
+        return this.articuloClient.stockPorArticuloYAlmacenes(idArticulo, idAlmacen);
     }
 
 }

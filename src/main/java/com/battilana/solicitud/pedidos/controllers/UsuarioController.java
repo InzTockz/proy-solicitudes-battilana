@@ -35,17 +35,17 @@ public class UsuarioController {
     }
 
     @PutMapping("/update/{idUsuario}")
-    ResponseEntity<UsuarioResponse> actualizarUsuario(@PathVariable Long idUsuario, @RequestBody UsuarioRequest usuarioRequest){
+    ResponseEntity<UsuarioResponse> actualizarUsuario(@PathVariable Integer idUsuario, @RequestBody UsuarioRequest usuarioRequest){
         return ResponseEntity.status(HttpStatus.OK).body(this.usuarioService.updateUser(idUsuario, usuarioRequest));
     }
 
     @GetMapping("/find/{idUsuario}")
-    ResponseEntity<UsuarioResponse> buscarUsuario(@PathVariable Long idUsuario){
+    ResponseEntity<UsuarioResponse> buscarUsuario(@PathVariable Integer idUsuario){
         return ResponseEntity.status(HttpStatus.OK).body(this.usuarioService.findUsuario(idUsuario));
     }
 
     @DeleteMapping("/disableUser/{idUsuario}")
-    ResponseEntity<Void> deshabilitarUsuario(@PathVariable Long idUsuario){
+    ResponseEntity<Void> deshabilitarUsuario(@PathVariable Integer idUsuario){
         this.usuarioService.disableUser(idUsuario);
         return ResponseEntity.noContent().build();
     }

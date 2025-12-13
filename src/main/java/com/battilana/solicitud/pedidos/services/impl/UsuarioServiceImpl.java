@@ -4,6 +4,7 @@ import com.battilana.solicitud.pedidos.dtos.LoginRequest;
 import com.battilana.solicitud.pedidos.dtos.LoginResponse;
 import com.battilana.solicitud.pedidos.dtos.UsuarioRequest;
 import com.battilana.solicitud.pedidos.dtos.UsuarioResponse;
+import com.battilana.solicitud.pedidos.entities.AlmacenesEntity;
 import com.battilana.solicitud.pedidos.entities.UsuarioEntity;
 import com.battilana.solicitud.pedidos.jwt.JwtGenerator;
 import com.battilana.solicitud.pedidos.mapper.UsuariosMapper;
@@ -49,7 +50,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public UsuarioResponse updateUser(Long idUsuario, UsuarioRequest usuarioRequest) {
+    public UsuarioResponse updateUser(Integer idUsuario, UsuarioRequest usuarioRequest) {
         if (idUsuario != null) {
             UsuarioEntity usuarioEntity = this.usuariosMapper.toUserEntity(usuarioRequest);
             usuarioEntity.setIdUsuario(idUsuario);
@@ -60,7 +61,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public UsuarioResponse findUsuario(Long idUsuario) {
+    public UsuarioResponse findUsuario(Integer idUsuario) {
         if(idUsuario!=null){
             return this.usuariosMapper.toUserResponse(this.usuarioRepository.findById(idUsuario).get());
         }
@@ -70,10 +71,15 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public void disableUser(Long idUsuario) {
+    public void disableUser(Integer idUsuario) {
         UsuarioEntity usuarioEntity = this.usuarioRepository.findById(idUsuario).get();
         usuarioEntity.setStatus(false);
         this.usuarioRepository.save(usuarioEntity);
+    }
+
+    @Override
+    public List<AlmacenesEntity> findAlmacenesEntityByCodVendedor(Integer codVendedor) {
+        return List.of();
     }
 
     @Override
@@ -93,21 +99,19 @@ public class UsuarioServiceImpl implements UsuarioService {
                 String token = this.jwtGenerator.getToken(loginRequest.username());
 
                 return new LoginResponse(usuarioEntity.get().getIdUsuario(),
-                        usuarioEntity.get().getCodigo(),
-                        usuarioEntity.get().getAlmacen(),
+                        usuarioEntity.get().getCodVendedor(),
+//                        usuarioEntity.get().getAlmacenesEntity(),
                         token,
                         "success");
             } else {
                 return new LoginResponse(null,
                         0,
                         "",
-                        "",
                         "error");
             }
         } else {
             return new LoginResponse(null,
                     0,
-                    "",
                     "",
                     "error");
         }
