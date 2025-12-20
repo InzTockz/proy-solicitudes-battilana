@@ -7,8 +7,8 @@ import java.util.List;
 public interface ManageSapService {
 
     //SECCION DE DRAFTS
-    DraftResponse findDraftById(Integer idDraft, Long idUsuarioSap);
-    DraftResponse saveDraft(DraftRequest draftRequest, Long idUsuarioSap);
+    DraftSLResponse findDraftById(Integer idDraft, Long idUsuarioSap);
+    DraftSLResponse saveDraft(DraftSLRequest draftSLRequest, Long idUsuarioSap);
     List<ClientesResponse> listadoClientesPorVendedor(Integer idVendedor);
     List<ClientesResponse> listadoClientesPorVendedorYCardName(Integer idVendedor, String cardName);
     VendedoresResponse buscarVendedorPorId(Integer idVendedor);

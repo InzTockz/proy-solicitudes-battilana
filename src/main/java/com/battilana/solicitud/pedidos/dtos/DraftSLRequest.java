@@ -2,7 +2,7 @@ package com.battilana.solicitud.pedidos.dtos;
 
 import java.util.List;
 
-public record DraftRequest(
+public record DraftSLRequest(
         //CODIGO DEL CLIENTE
         String CardCode,
         //TIPO DE DOCUMENTO

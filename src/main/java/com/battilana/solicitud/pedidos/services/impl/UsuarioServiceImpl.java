@@ -1,13 +1,12 @@
 package com.battilana.solicitud.pedidos.services.impl;
 
-import com.battilana.solicitud.pedidos.dtos.LoginRequest;
-import com.battilana.solicitud.pedidos.dtos.LoginResponse;
-import com.battilana.solicitud.pedidos.dtos.UsuarioRequest;
-import com.battilana.solicitud.pedidos.dtos.UsuarioResponse;
+import com.battilana.solicitud.pedidos.dtos.*;
 import com.battilana.solicitud.pedidos.entities.AlmacenesEntity;
 import com.battilana.solicitud.pedidos.entities.UsuarioEntity;
 import com.battilana.solicitud.pedidos.jwt.JwtGenerator;
+import com.battilana.solicitud.pedidos.mapper.AlmacenesMapper;
 import com.battilana.solicitud.pedidos.mapper.UsuariosMapper;
+import com.battilana.solicitud.pedidos.repositorys.AlmacenesRepository;
 import com.battilana.solicitud.pedidos.repositorys.UsuarioRepository;
 import com.battilana.solicitud.pedidos.services.UsuarioService;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,13 +27,17 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final BCryptPasswordEncoder encoder;
     private final JwtGenerator jwtGenerator;
     private final AuthenticationManager authenticationManager;
+    private final AlmacenesMapper almacenesMapper;
+    private final AlmacenesRepository almacenesRepository;
 
-    public UsuarioServiceImpl(UsuarioRepository usuarioRepository, UsuariosMapper usuariosMapper, BCryptPasswordEncoder encoder, JwtGenerator jwtGenerator, AuthenticationManager authenticationManager) {
+    public UsuarioServiceImpl(UsuarioRepository usuarioRepository, UsuariosMapper usuariosMapper, BCryptPasswordEncoder encoder, JwtGenerator jwtGenerator, AuthenticationManager authenticationManager, AlmacenesMapper almacenesMapper, AlmacenesRepository almacenesRepository) {
         this.usuarioRepository = usuarioRepository;
         this.usuariosMapper = usuariosMapper;
         this.encoder = encoder;
         this.jwtGenerator = jwtGenerator;
         this.authenticationManager = authenticationManager;
+        this.almacenesMapper = almacenesMapper;
+        this.almacenesRepository = almacenesRepository;
     }
 
     @Override
@@ -78,8 +81,9 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public List<AlmacenesEntity> findAlmacenesEntityByCodVendedor(Integer codVendedor) {
-        return List.of();
+    public List<AlmacenResponse> findAlmacenesEntityByCodVendedor(Integer codVendedor) {
+        List<AlmacenesEntity> almacenesEntity = this.usuarioRepository.findAlmacenesEntityByCodVendedor(codVendedor);
+        return this.almacenesMapper.toAlmacenResponseList(almacenesEntity);
     }
 
     @Override

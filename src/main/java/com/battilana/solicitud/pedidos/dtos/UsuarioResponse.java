@@ -9,10 +9,8 @@ public record UsuarioResponse(
         String names,
         String subnames,
         String email,
+        String phone,
         LocalDate createAt,
-        Boolean status,
-        String username,
-        String password,
-        Roles roles
+        String tipoUsuario
 ) {
 }

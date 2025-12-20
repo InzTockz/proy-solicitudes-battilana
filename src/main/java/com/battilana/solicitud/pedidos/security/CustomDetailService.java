@@ -1,6 +1,7 @@
 package com.battilana.solicitud.pedidos.security;
 
 import com.battilana.solicitud.pedidos.dtos.UsuarioResponse;
+import com.battilana.solicitud.pedidos.entities.UsuarioEntity;
 import com.battilana.solicitud.pedidos.mapper.UsuariosMapper;
 import com.battilana.solicitud.pedidos.repositorys.UsuarioRepository;
 import org.springframework.security.core.userdetails.User;
@@ -22,12 +23,18 @@ public class CustomDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UsuarioResponse usuarioResponse = this.usuariosMapper.toUserResponse(this.usuarioRepository.findByUsername(username).get());
+        //UsuarioResponse usuarioResponse = this.usuariosMapper.toUserResponse(this.usuarioRepository.findByUsername(username).get());
+        UsuarioEntity usuarioEntity = this.usuarioRepository.findByUsername(username).get();
 
+//        UserDetails userDetails = User.builder()
+//                .username(usuario.username())
+//                .password(usuarioResponse.password())
+//                .roles(usuarioResponse.roles().name())
+//                .build();
         UserDetails userDetails = User.builder()
-                .username(usuarioResponse.username())
-                .password(usuarioResponse.password())
-                .roles(usuarioResponse.roles().name())
+                .username(usuarioEntity.getUsername())
+                .password(usuarioEntity.getPassword())
+                .roles(usuarioEntity.getRoles().name())
                 .build();
         return userDetails;
     }

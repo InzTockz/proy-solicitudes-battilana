@@ -2,7 +2,7 @@ package com.battilana.solicitud.pedidos.dtos;
 
 import java.util.List;
 
-public record DraftResponse(
+public record DraftSLResponse(
         Integer DocEntry,
         Integer DocNum,
         String DocObjectCode,

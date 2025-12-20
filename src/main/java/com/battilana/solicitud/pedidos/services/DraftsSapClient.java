@@ -1,5 +1,6 @@
 package com.battilana.solicitud.pedidos.services;
 
+import com.battilana.solicitud.pedidos.dtos.DetalleDraftResponse;
 import com.battilana.solicitud.pedidos.dtos.DraftSapResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,4 +20,10 @@ public interface DraftsSapClient {
             @RequestParam("fechaInicio") LocalDate fechaInicio,
             @RequestParam("fechaFin") LocalDate fechaFin
     );
+
+    @RequestMapping(method = RequestMethod.GET, value = "/buscarDraft/docEntryId/{docEntryId}")
+    DraftSapResponse buscarDraftPorDocEntry(@PathVariable Integer docEntryId);
+
+    @RequestMapping(method = RequestMethod.GET, value = "/buscarDetalleDraft/docEntryId/{docEntryId}")
+    List<DetalleDraftResponse> buscarDetalleDraftPorDocEntry(@PathVariable Integer docEntryId);
 }

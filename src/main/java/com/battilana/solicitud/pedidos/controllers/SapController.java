@@ -29,9 +29,9 @@ public class SapController {
     }
 
     @PostMapping("/agregar/user-sap/{idUsuarioSap}")
-    public ResponseEntity<?> agregarDraft(@RequestBody DraftRequest draftRequest,@PathVariable Long idUsuarioSap){
+    public ResponseEntity<?> agregarDraft(@RequestBody DraftSLRequest draftSLRequest, @PathVariable Long idUsuarioSap){
         try {
-            DraftResponse respuesta = this.manageSapService.saveDraft(draftRequest, idUsuarioSap);
+            DraftSLResponse respuesta = this.manageSapService.saveDraft(draftSLRequest, idUsuarioSap);
 
             if(respuesta == null){
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -60,7 +60,7 @@ public class SapController {
     }
 
     @GetMapping("/listado/idDraft/{idDraft}/idUserSap/{idUserSap}")
-    public ResponseEntity<DraftResponse> listadoDrafts(@PathVariable Integer idDraft, @PathVariable Long idUserSap) {
+    public ResponseEntity<DraftSLResponse> listadoDrafts(@PathVariable Integer idDraft, @PathVariable Long idUserSap) {
         return ResponseEntity.status(HttpStatus.OK).body(this.manageSapService.findDraftById(idDraft, idUserSap));
     }
 
@@ -100,5 +100,15 @@ public class SapController {
     @GetMapping("/listar-draft/{idVendedor}")
     public ResponseEntity<List<DraftSapResponse>> listadoDraftsPorVendedorYFecha(@PathVariable Integer idVendedor, @RequestParam("fechaInicio") LocalDate fechaInicio, @RequestParam("fechaFin") LocalDate fechaFin){
         return ResponseEntity.status(HttpStatus.OK).body(this.draftsSapClient.listadoDraftPorVendedorYFechas(idVendedor, fechaInicio, fechaFin));
+    }
+
+    @GetMapping("/buscar-draft/docEntryId/{docEntryId}")
+    public ResponseEntity<DraftSapResponse> buscarDraftPorDocEntry(@PathVariable Integer docEntryId){
+        return ResponseEntity.status(HttpStatus.OK).body(this.draftsSapClient.buscarDraftPorDocEntry(docEntryId));
+    }
+
+    @GetMapping("/buscar-detalle-draft/docEntryId/{docEntryId}")
+    public ResponseEntity<List<DetalleDraftResponse>> buscarDetalleDraftPorDocEntry(@PathVariable Integer docEntryId){
+        return ResponseEntity.status(HttpStatus.OK).body(this.draftsSapClient.buscarDetalleDraftPorDocEntry(docEntryId));
     }
 }

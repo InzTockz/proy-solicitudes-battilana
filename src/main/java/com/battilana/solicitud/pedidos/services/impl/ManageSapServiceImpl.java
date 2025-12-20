@@ -2,8 +2,6 @@ package com.battilana.solicitud.pedidos.services.impl;
 
 import com.battilana.solicitud.pedidos.config.FeignConfig;
 import com.battilana.solicitud.pedidos.dtos.*;
-import com.battilana.solicitud.pedidos.entities.AlmacenesEntity;
-import com.battilana.solicitud.pedidos.entities.UsuarioEntity;
 import com.battilana.solicitud.pedidos.entities.UsuariosSapEntity;
 import com.battilana.solicitud.pedidos.repositorys.UsuarioRepository;
 import com.battilana.solicitud.pedidos.repositorys.UsuarioSapRepository;
@@ -11,7 +9,6 @@ import com.battilana.solicitud.pedidos.services.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,7 +36,7 @@ public class ManageSapServiceImpl implements ManageSapService {
     }
 
     @Override
-    public DraftResponse findDraftById(Integer idDraft, Long idUsuarioSap) {
+    public DraftSLResponse findDraftById(Integer idDraft, Long idUsuarioSap) {
 
         Optional<UsuariosSapEntity> usuariosSapEntity = this.usuarioSapRepository.findById(idUsuarioSap);
         if (usuariosSapEntity.isPresent()) {
@@ -61,7 +58,7 @@ public class ManageSapServiceImpl implements ManageSapService {
     }
 
     @Override
-    public DraftResponse saveDraft(DraftRequest draftRequest, Long idUsuarioSap) {
+    public DraftSLResponse saveDraft(DraftSLRequest draftSLRequest, Long idUsuarioSap) {
         Optional<UsuariosSapEntity> usuariosSapEntity = this.usuarioSapRepository.findById(idUsuarioSap);
         if (usuariosSapEntity.isPresent()) {
             ResponseEntity<SapLoginResponse> sapLoginResponse = this.sapLoginClient.sapLogin(new SapLoginRequest(
@@ -73,7 +70,7 @@ public class ManageSapServiceImpl implements ManageSapService {
             List<String> cookie = sapLoginResponse.getHeaders().get("Set-Cookie");
             FeignConfig.setSession(cookie.get(0) + cookie.get(1));
 
-            return this.draftsClient.addDraft(draftRequest);
+            return this.draftsClient.addDraft(draftSLRequest);
         } else {
             return null;
         }
