@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@FeignClient(name = "articulo-client", url = "http://localhost:8082/api/articulos")
+@FeignClient(name = "articulo-client", url = "http://192.168.1.10:8081/api/v2/articulos")
 public interface ArticuloClient {
 
-    @RequestMapping(method = RequestMethod.GET, value = "/listar/{idAlmacen}")
+    @RequestMapping(method = RequestMethod.GET, value = "/{idAlmacen}")
     List<ArticulosResponse> listadoArticulosPorAlmacen(@PathVariable String idAlmacen);
 
     @RequestMapping(method = RequestMethod.GET, value = "/stock/articulo/{idArticulo}/almacen/{idAlmacen}")
     StockAlmacenResponse stockPorArticuloYAlmacenes(@PathVariable String idArticulo, @PathVariable String idAlmacen);
 
-    @RequestMapping(method = RequestMethod.GET, value = "/listar-articulos/{idAlmacen}")
+    @RequestMapping(method = RequestMethod.GET, value = "/articulos/{idAlmacen}")
     List<ArticulosResponse> listadoArticulosPorAlmacenYNombre(@PathVariable String idAlmacen, @RequestParam("nombre") String nombre);
 }

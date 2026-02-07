@@ -15,7 +15,7 @@ import java.util.Optional;
 @Service
 public class ManageSapServiceImpl implements ManageSapService {
 
-    private final DraftsClient draftsClient;
+    private final DraftsSLClient draftsSLClient;
     private final SapLoginClient sapLoginClient;
     private final UsuarioSapRepository usuarioSapRepository;
     private final ClientesClient clientesClient;
@@ -24,8 +24,8 @@ public class ManageSapServiceImpl implements ManageSapService {
     private final DraftsSapClient draftsSapClient;
     private final UsuarioRepository usuarioRepository;
 
-    public ManageSapServiceImpl(DraftsClient draftsClient, SapLoginClient sapLoginClient, UsuarioSapRepository usuarioSapRepository, ClientesClient clientesClient, VendedorClient vendedorClient, ArticuloClient articuloClient, DraftsSapClient draftsSapClient, UsuarioRepository usuarioRepository) {
-        this.draftsClient = draftsClient;
+    public ManageSapServiceImpl(DraftsSLClient draftsSLClient, SapLoginClient sapLoginClient, UsuarioSapRepository usuarioSapRepository, ClientesClient clientesClient, VendedorClient vendedorClient, ArticuloClient articuloClient, DraftsSapClient draftsSapClient, UsuarioRepository usuarioRepository) {
+        this.draftsSLClient = draftsSLClient;
         this.sapLoginClient = sapLoginClient;
         this.usuarioSapRepository = usuarioSapRepository;
         this.clientesClient = clientesClient;
@@ -51,7 +51,7 @@ public class ManageSapServiceImpl implements ManageSapService {
             List<String> cookie = sapLoginResponse.getHeaders().get("Set-Cookie");
             FeignConfig.setSession(cookie.get(0) + cookie.get(1));
 
-            return this.draftsClient.listDraftById(idDraft);
+            return this.draftsSLClient.listDraftById(idDraft);
         } else {
             return null;
         }
@@ -70,7 +70,7 @@ public class ManageSapServiceImpl implements ManageSapService {
             List<String> cookie = sapLoginResponse.getHeaders().get("Set-Cookie");
             FeignConfig.setSession(cookie.get(0) + cookie.get(1));
 
-            return this.draftsClient.addDraft(draftSLRequest);
+            return this.draftsSLClient.addDraft(draftSLRequest);
         } else {
             return null;
         }

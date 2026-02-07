@@ -51,6 +51,9 @@ public class UsuarioEntity {
     @Column(name = "cod_vendedor")
     private Integer codVendedor;
 
+    @Column(name = "sap_user_default")
+    private Long usuarioSapPredeterminado;
+
     @Column(name = "status")
     private Boolean status = true;
 

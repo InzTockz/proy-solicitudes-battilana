@@ -98,7 +98,7 @@ public class SapController {
 
     //LISTADO DE DRAFTS POR VENDEDOR
     @GetMapping("/listar-draft/{idVendedor}")
-    public ResponseEntity<List<DraftSapResponse>> listadoDraftsPorVendedorYFecha(@PathVariable Integer idVendedor, @RequestParam("fechaInicio") LocalDate fechaInicio, @RequestParam("fechaFin") LocalDate fechaFin){
+    public ResponseEntity<List<DraftSapResponse>> listadoDraftsPorVendedorYFecha(@PathVariable Integer idVendedor, @RequestParam(value = "fechaInicio", required = false) LocalDate fechaInicio, @RequestParam(value = "fechaFin", required = false) LocalDate fechaFin){
         return ResponseEntity.status(HttpStatus.OK).body(this.draftsSapClient.listadoDraftPorVendedorYFechas(idVendedor, fechaInicio, fechaFin));
     }
 

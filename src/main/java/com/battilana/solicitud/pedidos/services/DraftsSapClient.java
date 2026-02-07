@@ -11,19 +11,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDate;
 import java.util.List;
 
-@FeignClient(name = "drafts-sap-client", url = "http://192.168.1.139:8082/api/drafts")
+@FeignClient(name = "drafts-sap-client", url = "http://192.168.1.10:8081/api/drafts")
 public interface DraftsSapClient {
 
-    @RequestMapping(method = RequestMethod.GET, value = "/listarDrafts/{idVendedor}")
+    @RequestMapping(method = RequestMethod.GET, value = "/vendedor/{idVendedor}")
     List<DraftSapResponse> listadoDraftPorVendedorYFechas(
             @PathVariable Integer idVendedor,
             @RequestParam("fechaInicio") LocalDate fechaInicio,
             @RequestParam("fechaFin") LocalDate fechaFin
     );
 
-    @RequestMapping(method = RequestMethod.GET, value = "/buscarDraft/docEntryId/{docEntryId}")
+    @RequestMapping(method = RequestMethod.GET, value = "/id/{docEntryId}")
     DraftSapResponse buscarDraftPorDocEntry(@PathVariable Integer docEntryId);
 
-    @RequestMapping(method = RequestMethod.GET, value = "/buscarDetalleDraft/docEntryId/{docEntryId}")
+    @RequestMapping(method = RequestMethod.GET, value = "/detalle/{docEntryId}")
     List<DetalleDraftResponse> buscarDetalleDraftPorDocEntry(@PathVariable Integer docEntryId);
 }

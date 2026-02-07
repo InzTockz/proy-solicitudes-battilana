@@ -11,6 +11,7 @@ public record UsuarioResponse(
         String email,
         String phone,
         LocalDate createAt,
+        Long usuarioSapPredeterminado,
         String tipoUsuario
 ) {
 }
