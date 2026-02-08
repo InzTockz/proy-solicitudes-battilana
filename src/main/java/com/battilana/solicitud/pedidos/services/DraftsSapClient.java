@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDate;
 import java.util.List;
 
-@FeignClient(name = "drafts-sap-client", url = "http://192.168.1.10:8081/api/drafts")
+@FeignClient(name = "drafts-sap-client", url = "http://192.168.1.10:8081/api/borradores")
 public interface DraftsSapClient {
 
     @RequestMapping(method = RequestMethod.GET, value = "/vendedor/{idVendedor}")
