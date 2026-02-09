@@ -47,7 +47,7 @@ public class SapController {
                 sapCode = root.path("error").path("code").asText("UNKKOWN");
             } catch (Exception ignore){}
 
-            String userMessage = "Ocurrió un error en SAP";
+            String userMessage = e.getMessage();
 
             if(sapCode.equals("-10")){
                 userMessage = "Actualizar tipo de cambio";
