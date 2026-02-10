@@ -31,23 +31,23 @@ public class FeignConfig {
         };
     }
 
-    @Bean
-    public feign.Client feignClient() throws Exception{
-
-        TrustStrategy trustAll = (chain, authType) -> true;
-
-        SSLContext sslContext = SSLContexts.custom()
-                .loadTrustMaterial(null, trustAll)
-                .build();
-
-        SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(
-                sslContext, NoopHostnameVerifier.INSTANCE
-        );
-
-        CloseableHttpClient httpClient = HttpClients.custom()
-                .setSSLSocketFactory(socketFactory)
-                .build();
-
-        return new feign.httpclient.ApacheHttpClient(httpClient);
-    }
+//    @Bean
+//    public feign.Client feignClient() throws Exception{
+//
+//        TrustStrategy trustAll = (chain, authType) -> true;
+//
+//        SSLContext sslContext = SSLContexts.custom()
+//                .loadTrustMaterial(null, trustAll)
+//                .build();
+//
+//        SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(
+//                sslContext, NoopHostnameVerifier.INSTANCE
+//        );
+//
+//        CloseableHttpClient httpClient = HttpClients.custom()
+//                .setSSLSocketFactory(socketFactory)
+//                .build();
+//
+//        return new feign.httpclient.ApacheHttpClient(httpClient);
+//    }
 }
