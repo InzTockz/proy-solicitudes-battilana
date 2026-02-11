@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @FeignClient(name = "Clientes-Sap", url = "http://192.168.1.10:8081/api/v2/clientes")
+//@FeignClient(name = "Clientes-Sap", url = "http://192.168.1.139:8082/api/v2/clientes")
 public interface ClientesClient {
 
     @RequestMapping(method = RequestMethod.GET, value = "/vendedor/{idVendedor}")

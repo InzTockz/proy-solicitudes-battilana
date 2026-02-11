@@ -15,6 +15,7 @@ public record DraftSapResponse(
         String fullNamesOwner,
         String wddStatus,
         String comments,
+        String docCur,
         Double docTotal
 ) {
 }

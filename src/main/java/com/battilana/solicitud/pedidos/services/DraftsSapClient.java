@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @FeignClient(name = "drafts-sap-client", url = "http://192.168.1.10:8081/api/v2/borradores")
+//@FeignClient(name = "drafts-sap-client", url = "http://192.168.1.139:8082/api/v2/borradores")
 public interface DraftsSapClient {
 
     @RequestMapping(method = RequestMethod.GET, value = "/vendedor/{idVendedor}")
